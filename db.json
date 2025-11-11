@@ -41,6 +41,13 @@
       "name": "Fiddle Leaf Fig",
       "image": "./images/fiddle-leaf-fig.jpg",
       "price": 55
+    },
+    {
+      "name": "Banana",
+      "image": "https://unsplash.com/photos/a-red-wall-with-a-bunch-of-green-plants-next-to-it-hLMWo3eFBUk",
+      "price": 10,
+      "soldOut": false,
+      "id": 8
     }
   ]
 }
