@@ -8,39 +8,32 @@ function App() {
   const [plants, setPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch all plants when app loads
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then((r) => r.json())
-      .then(setPlants)
-      .catch((err) => console.error("Error fetching plants:", err));
+      .then((data) => setPlants(data));
   }, []);
 
-  // Add a new plant
-  function handleAddPlant(newPlant) {
+  const handleAddPlant = (newPlant) => {
     setPlants((prev) => [...prev, newPlant]);
-  }
+  };
 
-  // Toggle sold out status
-  function handleToggleSoldOut(id) {
-    setPlants((prevPlants) =>
-      prevPlants.map((plant) =>
-        plant.id === id ? { ...plant, soldOut: !plant.soldOut } : plant
-      )
+  const handleToggleSoldOut = (id) => {
+    setPlants((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, soldOut: !p.soldOut } : p))
     );
-  }
+  };
 
-  // Filter plants by name
-  const displayedPlants = plants.filter((plant) =>
-    plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPlants = plants.filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="app">
       <Header />
-      <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <NewPlantForm onAddPlant={handleAddPlant} />
-      <PlantList plants={displayedPlants} onToggleSoldOut={handleToggleSoldOut} />
+      <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      <PlantList plants={filteredPlants} onToggleSoldOut={handleToggleSoldOut} />
     </div>
   );
 }

@@ -5,7 +5,11 @@ function PlantList({ plants, onToggleSoldOut }) {
   return (
     <ul className="cards">
       {plants.map((plant) => (
-        <PlantCard key={plant.id} plant={plant} onToggleSoldOut={onToggleSoldOut} />
+        <PlantCard
+          key={plant.id}
+          plant={plant}
+          onToggleSoldOut={onToggleSoldOut}
+        />
       ))}
     </ul>
   );

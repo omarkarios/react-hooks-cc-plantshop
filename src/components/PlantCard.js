@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 function PlantCard({ plant, onToggleSoldOut }) {
-  const { id, name, image, price, soldOut } = plant;
+  const [soldOut, setSoldOut] = useState(false);
+
+  const handleClick = () => {
+    setSoldOut(!soldOut);
+    onToggleSoldOut(plant.id);
+  };
 
   return (
-    <li className="card">
-      <img src={image} alt={name} />
-      <h4>{name}</h4>
-      <p>Price: ${price}</p>
-      <button
-        className={soldOut ? "sold-out" : ""}
-        onClick={() => onToggleSoldOut(id)}
-      >
-        {soldOut ? "Sold Out" : "In Stock"}
-      </button>
+    <li className="card" data-testid="plant-item">
+      <img src={plant.image} alt={plant.name} />
+      <h4>{plant.name}</h4>
+      <p>Price: {plant.price}</p>
+      {soldOut ? (
+        <button className="primary" onClick={handleClick}>
+          Out of Stock
+        </button>
+      ) : (
+        <button onClick={handleClick}>In Stock</button>
+      )}
     </li>
   );
 }

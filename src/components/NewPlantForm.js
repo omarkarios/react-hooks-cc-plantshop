@@ -1,34 +1,26 @@
 import React, { useState } from "react";
 
 function NewPlantForm({ onAddPlant }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    image: "",
-    price: "",
-  });
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  }
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [price, setPrice] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
 
+    const newPlant = { name, image, price };
+
     fetch("http://localhost:6001/plants", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: formData.name,
-        image: formData.image,
-        price: parseFloat(formData.price),
-        soldOut: false,
-      }),
+      headers: { "Content-Type": "Application/JSON" },
+      body: JSON.stringify(newPlant),
     })
       .then((r) => r.json())
-      .then(onAddPlant);
+      .then((data) => onAddPlant(data));
 
-    setFormData({ name: "", image: "", price: "" });
+    setName("");
+    setImage("");
+    setPrice("");
   }
 
   return (
@@ -37,26 +29,23 @@ function NewPlantForm({ onAddPlant }) {
         type="text"
         name="name"
         placeholder="Plant name"
-        value={formData.name}
-        onChange={handleChange}
-        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <input
         type="text"
         name="image"
         placeholder="Image URL"
-        value={formData.image}
-        onChange={handleChange}
-        required
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
       />
       <input
         type="number"
         name="price"
-        placeholder="Price"
         step="0.01"
-        value={formData.price}
-        onChange={handleChange}
-        required
+        placeholder="Price"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
       />
       <button type="submit">Add Plant</button>
     </form>
