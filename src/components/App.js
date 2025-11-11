@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "./components/Header";
-import PlantList from "./components/PlantList";
-import NewPlantForm from "./components/NewPlantForm";
-import Search from "./components/Search";
+import Header from "./Header";
+import PlantList from "./PlantList";
+import NewPlantForm from "./NewPlantForm";
+import Search from "./Search";
 
 function App() {
   const [plants, setPlants] = useState([]);
